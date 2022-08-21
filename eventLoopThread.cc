@@ -4,6 +4,7 @@ eventLoopThread::eventLoopThread(const threadInitCallback &cb, const std::string
     : loop_(nullptr)
     , exiting_(false)
     , thread_(std::bind(&eventLoopThread::threadFunc, this), name)
+    , mutex_()
     , cond_()
     , callBack_(cb)
 {
@@ -22,7 +23,7 @@ eventLoopThread::~eventLoopThread()
 
 eventLoop *eventLoopThread::startLoop() 
 {
-    thread_.start();
+    thread_.start(); //启动线程循环
 
     eventLoop *loop = nullptr;
     {
@@ -39,7 +40,7 @@ eventLoop *eventLoopThread::startLoop()
 
 void eventLoopThread::threadFunc() 
 {
-    eventLoop loop; //在创建线程时创建eventloop， one loop per thread
+    eventLoop loop; //在创建线程时创建一个eventloop，和上面的线程一一对应 one loop per thread
 
     if (callBack_) 
     {

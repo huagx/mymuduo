@@ -10,7 +10,7 @@ class Acceptor
 {
 public:
     using NewConnectCallback = std::function<void(int socketfd, const InetAdderss&)>;
-    Acceptor(eventLoop *loop, const InetAdderss &listenAddr, bool reuseport);
+    Acceptor(eventLoop *loop, const InetAdderss& listenAddr, bool reuseport);
     ~Acceptor();
 
     void setNewConnectCallback(const NewConnectCallback &cb);

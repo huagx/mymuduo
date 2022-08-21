@@ -11,7 +11,10 @@ const int kAdded = 1;
 // channel从poller中删除
 const int kDelete = 2;
 
-epollPoller::epollPoller(eventLoop *loop) : poller(loop), epollFd_(epoll_create1(EPOLL_CLOEXEC)), events_(kIntEventListSize)
+epollPoller::epollPoller(eventLoop *loop)
+    : poller(loop)
+    , epollFd_(epoll_create1(EPOLL_CLOEXEC))
+    , events_(kIntEventListSize)
 {
     if (epollFd_ < 0)
     {
@@ -26,8 +29,10 @@ epollPoller::~epollPoller()
 
 timeStamp epollPoller::poll(int timeoutMs, channelList *activeChannels)
 {
+    LOG_INFO("func=%s => fd total count : %lu\n", __FUNCTION__, channels_.size());
+    // 这里一次epoll最多取出channels_.size()个fd的事件， 如果numEvents的个数等于channels_.size()的大小的话，那么events_就会进行扩容
     int numEvents = ::epoll_wait(epollFd_, &*events_.begin(), static_cast<int>(events_.size()), timeoutMs);
-    int saveErrno = errno;
+    int saveErrno = errno; //保存
     timeStamp now(timeStamp::now());
 
     if (numEvents > 0)
@@ -36,7 +41,7 @@ timeStamp epollPoller::poll(int timeoutMs, channelList *activeChannels)
         fillActiveChannels(numEvents, activeChannels);
         if (numEvents == events_.size())
         {
-            events_.resize(events_.size() * 2);
+            events_.resize(events_.size() * 2); //扩容
         }
     }
     else if (numEvents == 0)
@@ -47,7 +52,8 @@ timeStamp epollPoller::poll(int timeoutMs, channelList *activeChannels)
     {
         if (saveErrno != EINTR)
         {
-            //
+            errno = saveErrno;
+            LOG_ERROR("epollPoller::poll err!");
         }
     }
 
@@ -115,8 +121,9 @@ void epollPoller::update(int operation, channel *chnl)
     epoll_event event;
     memset(&event, 0, sizeof(epoll_event));
     event.events = chnl->events();
-    event.data.ptr = chnl;
     int fd = chnl->fd();
+    event.data.fd = fd;
+    event.data.ptr = chnl;
     if (::epoll_ctl(epollFd_, operation, fd, &event) < 0)
     {
         if (operation == EPOLL_CTL_DEL)

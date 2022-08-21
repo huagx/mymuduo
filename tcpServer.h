@@ -16,16 +16,16 @@
 class tcpServer
 {
 public:
-    using ThreadInitCallback = std::function<void(eventLoop*)>;
+    using ThreadInitCallback = std::function<void(eventLoop *)>;
     enum Option
     {
         KnoReusePort,
         KReusePort,
     };
-    tcpServer(eventLoop *loop, 
-                const InetAdderss &listenAddr, 
-                const std::string &nameArg,
-                Option option = KnoReusePort);
+    tcpServer(eventLoop *loop,
+              const InetAdderss &listenAddr,
+              const std::string &nameArg,
+              Option option = KnoReusePort);
     ~tcpServer();
 
     void setThreadInitCallback(const ThreadInitCallback &cb);
@@ -38,21 +38,22 @@ public:
 
     //开启服务器监听
     void start();
+
 private:
     void newConnection(int sockfd, const InetAdderss &peerAddr);
     void removeConnection(const TcpConnectionPtr &conn);
     void removeConnectionInLoop(const TcpConnectionPtr &conn);
-    
-    using ConnectionMap = std::unordered_map<std::string, TcpConnectionPtr>; 
+
+    using ConnectionMap = std::unordered_map<std::string, TcpConnectionPtr>;
     eventLoop *loop_;
     const std::string ipPort_;
     const std::string name_;
     std::unique_ptr<Acceptor> accepter_;
     std::shared_ptr<EventLoopThreadPool> threadPool_;
 
-    ConnectionCallback connectionCallback_;//有新连接的回调
-    MessageCallback messageCallback_;//有读写消息时的回调
-    WriteCompleteCallback writeCompleteCallback_;//消息写完时的回调
+    ConnectionCallback connectionCallback_;       //有新连接的回调
+    MessageCallback messageCallback_;             //有读写消息时的回调
+    WriteCompleteCallback writeCompleteCallback_; //消息写完时的回调
 
     ThreadInitCallback threadInitCallback_;
     std::atomic_int started_;

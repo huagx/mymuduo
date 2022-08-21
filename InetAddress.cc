@@ -37,7 +37,7 @@ InetAdderss::~InetAdderss()
 const sockaddr_in *InetAdderss::getSockAddr() const 
 {
     return &addr_;
-};
+}
 
 void InetAdderss::setSockAddr(const sockaddr_in &addr) 
 {

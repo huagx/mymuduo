@@ -5,11 +5,12 @@
 #include <mutex>
 #include <atomic>
 #include "noncopyable.h"
-#include "poller.h"
-#include "channel.h"
 #include "timeStamp.h"
 #include "currentThread.h"
+#include <vector>
 
+class channel;
+class poller;
 class eventLoop : noncopyable
 {
 public:
@@ -23,19 +24,19 @@ public:
     timeStamp pollReturnTime() const;
 
     void runInLoop(Functor cb); //在当前loop中执行循环
-    void queueInLoop(Functor cb);
+    void queueInLoop(Functor cb); //把cb放入队列中，唤醒loop所在的线程执行cb
 
-    void wakeUp();
+    void wakeUp(); //用来唤醒loop所在的线程
 
-    void unpdateChannel(channel *chnl);
+    void updateChannel(channel *chnl);
     void removeChannel(channel *chnl);
 
     bool hasChannel(channel *chnl);
-    bool isInLoopThread() const;
+    bool isInLoopThread() const; //判断loop是否在自己的线程里面
 private:
     using channelList = std::vector<channel*>;
 
-    void handleRead();
+    void handleRead(); //唤醒loop所在的线程的具体实现
     void doPendingFunctors();
 
     std::atomic_bool looping_;  //原子操作 底层通过CAS实现

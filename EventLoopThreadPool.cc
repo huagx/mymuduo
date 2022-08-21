@@ -17,10 +17,11 @@ EventLoopThreadPool::~EventLoopThreadPool()
 
 }
 
-void EventLoopThreadPool::start(const ThreadInitCallback &cb) 
+void EventLoopThreadPool::start(const ThreadInitCallback &cb)
 {
     started_ = true;
-    for (int i = 0; i < numThreads_; ++i) {
+    for (int i = 0; i < numThreads_; ++i)
+    {
         char buf[name_.size() + 32];
         snprintf(buf, sizeof buf, "%s%d", name_.c_str(), i);
         eventLoopThread *t = new eventLoopThread(cb, buf);
@@ -28,7 +29,7 @@ void EventLoopThreadPool::start(const ThreadInitCallback &cb)
         loops_.push_back(t->startLoop());
     }
 
-    if (numThreads_ == 0 && cb) 
+    if (numThreads_ == 0 && cb)
     {
         cb(baseLoop_);
     }
@@ -36,9 +37,10 @@ void EventLoopThreadPool::start(const ThreadInitCallback &cb)
 
 std::vector<eventLoop*> EventLoopThreadPool::getAllLoops() 
 {
-    if (loops_.empty()) 
+    if (loops_.empty())
     {
         return std::vector<eventLoop*>(1, baseLoop_);
+        //return {baseLoop_};
     } 
     else 
     {

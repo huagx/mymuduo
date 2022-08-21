@@ -12,10 +12,11 @@
 class eventLoopThread : noncopyable
 {
 public:
-    using threadInitCallback = std::function<void(eventLoop*)>;
+    using threadInitCallback = std::function<void(eventLoop *)>;
     eventLoopThread(const threadInitCallback &cb = threadInitCallback(), const std::string &name = std::string());
     eventLoop *startLoop();
     ~eventLoopThread();
+
 private:
     eventLoop *loop_;
     bool exiting_;
@@ -24,6 +25,4 @@ private:
     std::condition_variable cond_;
     threadInitCallback callBack_;
     void threadFunc();
-
 };
-

@@ -56,19 +56,21 @@ public:
 private:
     void update();
     void handleEventWithGuard(timeStamp receiveTime);
+
+    //描述当前fd事件的状态
     static const int KNoneEvent;
     static const int KReadEvent;
     static const int KWriteEvent;
 
     eventLoop *loop_;
-    const int fd_;
-    int events_;
-    int revents_;
+    const int fd_; //epoll所要监听的fd
+    int events_;   //注册fd上的感兴趣的事件
+    int revents_;  //返回的具体发生的事件
     int index_;
     bool tied_;
     std::weak_ptr<void> tie_;
 
-    //channel 通道里面能够获取和fd最终发生的具体事件revents， 他负责调用具体的事件回调操作。
+    //channel 通道里面能够获取fd最终发生的具体事件revents， 他负责调用具体的事件回调操作。
     readEventCallback readCb_;
     eventCallback writeCb_;
     eventCallback closeCb_;

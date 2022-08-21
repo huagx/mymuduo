@@ -11,42 +11,42 @@ Thread::Thread(threadFunc func, const std::string &name)
     , name_(name) 
 {
     setDefaultName();
-} 
+}
 
-Thread::~Thread() 
+Thread::~Thread()
 {
-    if (started_ && !joined_) 
+    if (started_ && !joined_)
     {
         thread_->detach();
     }
 }
 
-void Thread::setDefaultName() 
+void Thread::setDefaultName()
 {
     int num = ++numCreated_;
-    if (name_.empty()) 
+    if (name_.empty())
     {
         char buf[32] = {0};
-        snprintf(buf, 32, "Thread%d", num);
+        snprintf(buf, 32, "Thread_%d", num);
     }
 }
 
-void Thread::start() 
+void Thread::start()
 {
     started_ = true;
     sem_t sem;
     sem_init(&sem, false, 0);
-    thread_ = std::make_shared<std::thread>([&](){
+    thread_ = std::make_shared<std::thread>([&]()
+                                            {
         tid_ = currentThread::tid(); 
         sem_post(&sem);
-        func_();
-    });
+        func_(); });
 
     //等待上面线程创建完成
     sem_wait(&sem);
 }
 
-void Thread::join() 
+void Thread::join()
 {
     joined_ = true;
     thread_->join();

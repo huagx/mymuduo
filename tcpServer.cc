@@ -59,7 +59,7 @@ void tcpServer::newConnection(int sockfd, const InetAdderss &peerAddr)
     conn->setMessageCallback(messageCallback_);
     conn->setWriteCompleteCallback(writeCompleteCallback_);
     conn->setCloseCallback(std::bind(&tcpServer::removeConnection, this, std::placeholders::_1));
-    ioLoop->runInLoop(std::bind(&TcpConnection::connectEstablished, conn)); 
+    ioLoop->runInLoop(std::bind(&TcpConnection::connectEstablished, conn));
 }
 
 void tcpServer::removeConnection(const TcpConnectionPtr &conn)

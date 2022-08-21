@@ -25,7 +25,15 @@ TcpConnection::TcpConnection(eventLoop *loop,
                              int sockfd,
                              const InetAdderss &localAddr,
                              const InetAdderss &peerAddr)
-    : loop_(checkLoopNotNull(loop)), name_(name), state_(kConnecting), reading_(true), socket_(new Socket(sockfd)), channel_(new channel(loop, sockfd)), localAddr_(localAddr), peerAddr_(peerAddr), highWaterMark_(64 * 1024 * 1024)
+    : loop_(checkLoopNotNull(loop))
+    , name_(name)
+    , state_(kConnecting)
+    , reading_(true)
+    , socket_(new Socket(sockfd))
+    , channel_(new channel(loop, sockfd))
+    , localAddr_(localAddr)
+    , peerAddr_(peerAddr)
+    , highWaterMark_(64 * 1024 * 1024)
 {
     channel_->setReadCB(std::bind(&TcpConnection::handleRead, this, std::placeholders::_1));
     channel_->setWriteCB(std::bind(&TcpConnection::handleWrite, this));
@@ -229,6 +237,7 @@ void TcpConnection::sendInLoop(const void *data, size_t len)
             }
         }
     }
+    
     if (!faultError && remaining > 0) //说明当前这一次没有把数据全部发送出去， 剩余的数据需要保存到缓冲区，然后给chennel_注册可写事件。
     {
         size_t oldLen = outputBuffer_.readAbleBytes();

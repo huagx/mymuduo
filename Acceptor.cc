@@ -6,7 +6,10 @@
 static int createNonblocking();
 
 Acceptor::Acceptor(eventLoop *loop, const InetAdderss &listenAddr, bool reuseport)
-    : loop_(loop), acceptSocket_(createNonblocking()), acceptChannel_(loop_, acceptSocket_.fd()), listenning_(false)
+    : loop_(loop)
+    , acceptSocket_(createNonblocking())
+    , acceptChannel_(loop_, acceptSocket_.fd())
+    , listenning_(false)
 {
     acceptSocket_.setReuseAddr(true);
     acceptSocket_.setReusePort(true);
@@ -34,7 +37,7 @@ void Acceptor::listen()
 {
     listenning_ = true;
     acceptSocket_.socketListen();
-    acceptChannel_.enableReading();
+    acceptChannel_.enableReading(); //向epoll中注册可读事件
 }
 
 static int createNonblocking()

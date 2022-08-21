@@ -1,0 +1,215 @@
+make all --print-data-base --no-builtin-variables --no-builtin-rules --question
+# GNU Make 3.82
+# Built for x86_64-redhat-linux-gnu
+# Copyright (C) 2010  Free Software Foundation, Inc.
+# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+# This is free software: you are free to change and redistribute it.
+# There is NO WARRANTY, to the extent permitted by law.
+
+# Make data base, printed on Sun Aug 21 18:02:55 2022
+
+# Variables
+
+# automatic
+<D = $(patsubst %/,%,$(dir $<))
+# automatic
+?F = $(notdir $?)
+# default
+.SHELLFLAGS := -c
+# environment
+VSCODE_AGENT_FOLDER = /root/.vscode-server
+# automatic
+?D = $(patsubst %/,%,$(dir $?))
+# automatic
+@D = $(patsubst %/,%,$(dir $@))
+# automatic
+@F = $(notdir $@)
+# default
+MAKE_VERSION := 3.82
+# makefile
+CURDIR := /home/huagx/mymuduo
+# makefile
+SHELL = /bin/sh
+# environment
+VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"cc0490d1397af23dc5bf44a96fe15dbb.zh-cn","_translationsConfigFile":"/root/.vscode-server/data/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/e4503b30fc78200f846c62cf8091b76ff5547662","_corruptedFile":"/root/.vscode-server/data/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/corrupted.info","_languagePackSupport":true}
+# environment
+_ = /usr/bin/make
+# makefile
+MAKEFILE_LIST := 
+# environment
+LESSOPEN = ||/usr/bin/lesspipe.sh %s
+# environment
+VSCODE_CWD = /root
+# environment
+SSH_CONNECTION = 111.19.92.163 15031 192.168.0.4 22
+# environment
+PATH = /root/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+# environment
+XDG_RUNTIME_DIR = /run/user/0
+# environment
+ELECTRON_RUN_AS_NODE = 1
+# default
+.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver check-symlink
+# automatic
+%F = $(notdir $%)
+# environment
+HISTFILESIZE = 10000
+# environment
+PWD = /home/huagx/mymuduo
+# environment
+VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-54dc3661-f3b6-4cd3-95c1-1d8f085f0cb9.sock
+# automatic
+*D = $(patsubst %/,%,$(dir $*))
+# environment
+HISTTIMEFORMAT = root %Y/%m/%d %T 
+# environment
+VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
+# environment
+HOME = /root
+# environment
+LOGNAME = root
+# environment
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+# automatic
++F = $(notdir $+)
+# environment
+VSCODE_HANDLES_UNCAUGHT_ERRORS = true
+# automatic
+^D = $(patsubst %/,%,$(dir $^))
+# environment
+HOSTNAME = ls-n2bnxdu3
+# environment
+MAKELEVEL := 0
+# default
+MAKE = $(MAKE_COMMAND)
+# default
+MAKECMDGOALS := all
+# environment
+SHLVL = 5
+# environment
+XDG_SESSION_ID = 432
+# environment
+USER = root
+# makefile
+.DEFAULT_GOAL := 
+# automatic
+%D = $(patsubst %/,%,$(dir $%))
+# default
+MAKE_COMMAND := make
+# default
+.VARIABLES := 
+# automatic
+*F = $(notdir $*)
+# makefile
+MAKEFLAGS = Rrqp
+# environment
+MFLAGS = -Rrqp
+# environment
+SSH_CLIENT = 111.19.92.163 15031 22
+# environment
+MAIL = /var/spool/mail/root
+# automatic
++D = $(patsubst %/,%,$(dir $+))
+# environment
+BROWSER = /root/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/bin/helpers/browser.sh
+# environment
+VSCODE_HANDLES_SIGPIPE = true
+# default
+MAKEFILES := 
+# environment
+PROMPT_COMMAND = history -a;
+# automatic
+<F = $(notdir $<)
+# environment
+LC_ALL = C
+# automatic
+^F = $(notdir $^)
+# default
+SUFFIXES := 
+# environment
+HISTSIZE = 1000
+# default
+.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
+# default
+.RECIPEPREFIX := 
+# environment
+LANG = C
+# variable set hash-table stats:
+# Load=62/1024=6%, Rehash=0, Collisions=6/81=7%
+
+# Pattern-specific Variable Values
+
+# No pattern-specific variable values.
+
+# Directories
+
+# . (device 64769, inode 655391): 46 files, no impossibilities.
+
+# 46 files, no impossibilities in 1 directories.
+
+# Implicit Rules
+
+# No implicit rules.
+
+# Files
+
+# Not a target:
+all:
+#  Command line target.
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has not been updated.
+
+# Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Makefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+makefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# Not a target:
+.DEFAULT:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+GNUmakefile:
+#  Implicit rule search has been done.
+#  File does not exist.
+#  File has been updated.
+#  Failed to be updated.
+
+# files hash-table stats:
+# Load=6/1024=1%, Rehash=0, Collisions=0/15=0%
+# VPATH Search Paths
+
+# No `vpath' search paths.
+
+# No general (`VPATH' variable) search path.
+
+# # of strings in strcache: 0 / lookups = 57 / hits = 57
+# # of strcache buffers: 1 (* 8176 B/buffer = 8176 B)
+# strcache used: total = 0 (642) / max = 0 / min = 8176 / avg = 0
+# strcache free: total = 0 (7534) / max = 0 / min = 8176 / avg = 0
+
+# strcache hash-table stats:
+# Load=54/8192=1%, Rehash=0, Collisions=1/57=2%
+# Finished Make data base on Sun Aug 21 18:02:55 2022
+
+ 
+make: *** No rule to make target `all'.  Stop.
+
