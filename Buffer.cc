@@ -30,7 +30,7 @@ void Buffer::makeSpace(size_t len)
     else 
     {
         size_t readAble = readAbleBytes();
-        std::copy(begin() + readAbleBytes(),
+        std::copy(begin() + readerIndex_,
                 begin() + writerIndex_,
                 begin() + kCheapPrepend);
         readerIndex_ = kCheapPrepend;
@@ -66,9 +66,9 @@ ssize_t Buffer::readFd(int fd, int* saveErrno)
 {
     char extrabuf[65536] = {0};
     struct iovec vec[2];
-    const size_t writeAble = writeAbleBytes();
 
-    vec[0].iov_base = begin() + writerIndex_;
+    const size_t writeAble = writeAbleBytes();
+    vec[0].iov_base = begin() + writerIndex_;  //这是buff底层缓冲区剩余的可写空间大小
     vec[0].iov_len = writeAble;
 
     vec[1].iov_base = extrabuf;
@@ -80,7 +80,7 @@ ssize_t Buffer::readFd(int fd, int* saveErrno)
     {
         *saveErrno = errno;
     }
-    else if (n <= writeAble) //buffer可写缓冲区足够写下当前数据
+    else if (n <= writeAble) //buffer可写缓冲区足够写下当前数据 
     {
         writerIndex_ += n;
     }
@@ -132,7 +132,7 @@ void Buffer::retrieve(size_t len)
 
 void Buffer::retrieveAll() 
 {
-    readerIndex_ = writerIndex_ = kCheapPrepend;
+    readerIndex_ = writerIndex_ = kCheapPrepend;  //重置可读可写位置
 }
 
 std::string Buffer::retrieveAsString(size_t len) 
