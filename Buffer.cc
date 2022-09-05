@@ -118,6 +118,11 @@ size_t Buffer::prependAbleBytes() const
     return readerIndex_;
 }
 
+const char* Buffer::peek() const
+{
+    return begin() + readerIndex_;
+}
+
 void Buffer::retrieve(size_t len) 
 {
     if (len < readAbleBytes()) 
