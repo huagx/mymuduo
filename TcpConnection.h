@@ -40,7 +40,6 @@ public:
     void send(const std::string &buf);
 
     void shutdown();
-    void shutdownInloop();
 
     void setConnectionCallback(const ConnectionCallback &cb) { connectionCallback_ = cb; }
     void setMessageCallback(const MessageCallback &cb) { messageCallback_ = cb; }
@@ -66,6 +65,7 @@ private:
     void handleClose();
     void handleError();
 
+    void shutdownInloop();
     void sendInLoop(const void *data, size_t len);
     eventLoop *loop_; //不是baseLoop, 因为Tcpconnection都是在subLoop中管理的
     const std::string name_;

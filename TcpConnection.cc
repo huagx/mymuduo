@@ -173,7 +173,7 @@ void TcpConnection::connectEstablished()
 {
     setState(kConnected);
     channel_->tie(shared_from_this());
-    channel_->enableReading();
+    channel_->enableReading();  //向epoll注册读事件
     if (connectionCallback_)
     {
         connectionCallback_(shared_from_this());

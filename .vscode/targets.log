@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Aug 21 18:02:55 2022
+# Make data base, printed on Mon Dec 26 22:30:44 2022
 
 # Variables
 
@@ -31,7 +31,7 @@ CURDIR := /home/huagx/mymuduo
 # makefile
 SHELL = /bin/sh
 # environment
-VSCODE_NLS_CONFIG = {"locale":"zh-cn","availableLanguages":{"*":"zh-cn"},"_languagePackId":"cc0490d1397af23dc5bf44a96fe15dbb.zh-cn","_translationsConfigFile":"/root/.vscode-server/data/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/tcf.json","_cacheRoot":"/root/.vscode-server/data/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn","_resolvedLanguagePackCoreLocation":"/root/.vscode-server/data/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/e4503b30fc78200f846c62cf8091b76ff5547662","_corruptedFile":"/root/.vscode-server/data/clp/cc0490d1397af23dc5bf44a96fe15dbb.zh-cn/corrupted.info","_languagePackSupport":true}
+VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
 _ = /usr/bin/make
 # makefile
@@ -41,9 +41,9 @@ LESSOPEN = ||/usr/bin/lesspipe.sh %s
 # environment
 VSCODE_CWD = /root
 # environment
-SSH_CONNECTION = 111.19.92.163 15031 192.168.0.4 22
+SSH_CONNECTION = 111.19.92.177 17277 192.168.0.4 22
 # environment
-PATH = /root/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+PATH = /root/.vscode-server/bin/e8a3071ea4344d9d48ef8a4df2c097372b0c5161/bin/remote-cli:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
 # environment
 XDG_RUNTIME_DIR = /run/user/0
 # environment
@@ -57,7 +57,7 @@ HISTFILESIZE = 10000
 # environment
 PWD = /home/huagx/mymuduo
 # environment
-VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-54dc3661-f3b6-4cd3-95c1-1d8f085f0cb9.sock
+VSCODE_IPC_HOOK_CLI = /run/user/0/vscode-ipc-c6f309a6-0805-4222-b84f-307c73c3bd23.sock
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
@@ -69,7 +69,7 @@ HOME = /root
 # environment
 LOGNAME = root
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # automatic
 +F = $(notdir $+)
 # environment
@@ -87,7 +87,7 @@ MAKECMDGOALS := all
 # environment
 SHLVL = 5
 # environment
-XDG_SESSION_ID = 432
+XDG_SESSION_ID = 51225
 # environment
 USER = root
 # makefile
@@ -105,13 +105,13 @@ MAKEFLAGS = Rrqp
 # environment
 MFLAGS = -Rrqp
 # environment
-SSH_CLIENT = 111.19.92.163 15031 22
+SSH_CLIENT = 111.19.92.177 17277 22
 # environment
 MAIL = /var/spool/mail/root
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # environment
-BROWSER = /root/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/bin/helpers/browser.sh
+BROWSER = /root/.vscode-server/bin/e8a3071ea4344d9d48ef8a4df2c097372b0c5161/bin/helpers/browser.sh
 # environment
 VSCODE_HANDLES_SIGPIPE = true
 # default
@@ -143,9 +143,9 @@ LANG = C
 
 # Directories
 
-# . (device 64769, inode 655391): 46 files, no impossibilities.
+# . (device 64769, inode 655391): 45 files, no impossibilities.
 
-# 46 files, no impossibilities in 1 directories.
+# 45 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -201,14 +201,14 @@ GNUmakefile:
 
 # No general (`VPATH' variable) search path.
 
-# # of strings in strcache: 0 / lookups = 57 / hits = 57
+# # of strings in strcache: 0 / lookups = 56 / hits = 56
 # # of strcache buffers: 1 (* 8176 B/buffer = 8176 B)
-# strcache used: total = 0 (642) / max = 0 / min = 8176 / avg = 0
-# strcache free: total = 0 (7534) / max = 0 / min = 8176 / avg = 0
+# strcache used: total = 0 (632) / max = 0 / min = 8176 / avg = 0
+# strcache free: total = 0 (7544) / max = 0 / min = 8176 / avg = 0
 
 # strcache hash-table stats:
-# Load=54/8192=1%, Rehash=0, Collisions=1/57=2%
-# Finished Make data base on Sun Aug 21 18:02:55 2022
+# Load=53/8192=1%, Rehash=0, Collisions=1/56=2%
+# Finished Make data base on Mon Dec 26 22:30:44 2022
 
  
 make: *** No rule to make target `all'.  Stop.
