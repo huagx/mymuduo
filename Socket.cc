@@ -5,7 +5,7 @@
 
 #include "Socket.h"
 #include "unistd.h"
-#include "logger.h"
+#include "Logger.h"
 
 Socket::Socket(int fd) : fd_(fd)
 {
@@ -26,7 +26,7 @@ void Socket::bindAddress(const InetAdderss &localAddr)
 {
     if (0 != ::bind(fd_, (sockaddr*)localAddr.getSockAddr(), sizeof(sockaddr_in))) 
     {
-        LOG_FATAL("bind socketFd: %d fail \n", fd_);
+        LogFatal << "Bind socketFd " <<  fd_ <<" failed !";
     }
 }
 
@@ -34,14 +34,14 @@ void Socket::socketListen()
 {
     if (0 != ::listen(fd_, 1024)) 
     {
-        LOG_FATAL("listen socketFd:%d fail \n", fd_);
+        LogFatal << "Listen socketFd " << fd_ << " failed!";
     }
 }
 
 int Socket::socketAccept(InetAdderss *peerAddr)
 {
     sockaddr_in addr;
-    socklen_t len;
+    socklen_t len = sizeof addr;
     bzero(&addr, sizeof addr);
     int connfd = ::accept(fd_, (sockaddr*)&addr, &len);
     if (connfd >= 0) 
@@ -60,7 +60,7 @@ void Socket::shutdownWrite()
 {
     if (::shutdown(fd_, SHUT_WR) < 0) 
     {
-        LOG_ERROR("socket::shutdownWrite error.\n");
+        LogError << "Socket shutdown Write error!";
     }    
 }
 
@@ -95,7 +95,7 @@ sockaddr_in Socket::getLocalAddr(int fd)
     socklen_t addrLen = static_cast<socklen_t>(sizeof localAddr);
     if (::getsockname(fd, (sockaddr *)(&localAddr), &addrLen) < 0)
     {
-        LOG_ERROR("Socket::getLocalAddr error!");
+        LogError << "Socket getLocalAddr error!";
     }
 
     return localAddr;

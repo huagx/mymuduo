@@ -1,13 +1,13 @@
 #include "tcpServer.h"
 #include "TcpConnection.h"
-#include "logger.h"
+#include "Logger.h"
 
 #include <functional>
 
 static eventLoop* checkLoopNotNull(eventLoop* loop)
 {
     if (loop == nullptr) {
-        LOG_FATAL("%s:%s:%d mainLoop is null \n", __FILE__, __FUNCTION__, __LINE__);        
+        LogFatal << "MainLoop is nullptr!";  
     }
     return loop;
 }
@@ -41,6 +41,26 @@ tcpServer::~tcpServer()
     }    
 }
 
+void tcpServer::setThreadInitCallback(const ThreadInitCallback &cb)
+{
+    threadInitCallback_ = cb;
+}
+
+void tcpServer::setConnectionCallback(const ConnectionCallback &cb)
+{
+    connectionCallback_ = cb;
+}
+
+void tcpServer::setMessageCallback(const MessageCallback &cb)
+{
+    messageCallback_ = cb;
+}
+
+void tcpServer::setWriteCompleteCallback(const WriteCompleteCallback &cb)
+{
+    writeCompleteCallback_ = cb;
+}
+
 //有新连接会执行回调
 void tcpServer::newConnection(int sockfd, const InetAdderss &peerAddr)
 {
@@ -49,8 +69,7 @@ void tcpServer::newConnection(int sockfd, const InetAdderss &peerAddr)
     snprintf(buf, sizeof buf, "-%s#%d", ipPort_.c_str(), nextConnId_);
     ++nextConnId_;
     std::string connectName = name_ + buf;
-    LOG_INFO("tcpServer::newConnection [%s] - new connection [%s] from %s \n",
-             name_.c_str(), connectName.c_str(), peerAddr.toIpPort().c_str());
+    LogInfo << "TcpServer newconnection [" << name_ << "] - new connection [" << connectName <<  "] from " <<  peerAddr.toIpPort();
     InetAdderss localAddr(Socket::getLocalAddr(sockfd));
 
     TcpConnectionPtr conn(new TcpConnection(ioLoop, connectName, sockfd, localAddr, peerAddr));
@@ -69,9 +88,10 @@ void tcpServer::removeConnection(const TcpConnectionPtr &conn)
 
 void tcpServer::removeConnectionInLoop(const TcpConnectionPtr &conn)
 {
-    LOG_INFO("tcpServer::removeConnectionInLoop [%s], - connection %s\n", name_.c_str(), conn->name().c_str());
+    LogInfo << "TcpServer::removeConnectionInLoop [" << name_ << "], - connection " << conn->name();
 
     size_t n = connections_.erase(conn->name());
+    (void)n;
     eventLoop* loop = conn->getLoop();
     loop->queueInLoop(std::bind(&TcpConnection::connectDestrory, conn));
 }

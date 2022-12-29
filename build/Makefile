@@ -42,10 +42,10 @@ EQUALS = =
 CMAKE_EDIT_COMMAND = /usr/bin/ccmake
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/huagx/mymuduo
+CMAKE_SOURCE_DIR = /opt/github/mymuduo
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/huagx/mymuduo/build
+CMAKE_BINARY_DIR = /opt/github/mymuduo/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -72,9 +72,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/huagx/mymuduo/build/CMakeFiles /home/huagx/mymuduo/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /opt/github/mymuduo/build/CMakeFiles /opt/github/mymuduo/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/huagx/mymuduo/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /opt/github/mymuduo/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -173,6 +173,21 @@ InetAddress.i:
 InetAddress.s:
 	$(MAKE) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/InetAddress.s
 .PHONY : InetAddress.s
+
+# target to build an object file
+Logger.o:
+	$(MAKE) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/Logger.o
+.PHONY : Logger.o
+
+# target to preprocess a source file
+Logger.i:
+	$(MAKE) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/Logger.i
+.PHONY : Logger.i
+
+# target to generate assembly for a file
+Logger.s:
+	$(MAKE) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/Logger.s
+.PHONY : Logger.s
 
 # target to build an object file
 Socket.o:
@@ -310,21 +325,6 @@ eventLoopThread.s:
 .PHONY : eventLoopThread.s
 
 # target to build an object file
-logger.o:
-	$(MAKE) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/logger.o
-.PHONY : logger.o
-
-# target to preprocess a source file
-logger.i:
-	$(MAKE) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/logger.i
-.PHONY : logger.i
-
-# target to generate assembly for a file
-logger.s:
-	$(MAKE) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/logger.s
-.PHONY : logger.s
-
-# target to build an object file
 poller.o:
 	$(MAKE) -f CMakeFiles/mymuduo.dir/build.make CMakeFiles/mymuduo.dir/poller.o
 .PHONY : poller.o
@@ -390,6 +390,9 @@ help:
 	@echo "... InetAddress.o"
 	@echo "... InetAddress.i"
 	@echo "... InetAddress.s"
+	@echo "... Logger.o"
+	@echo "... Logger.i"
+	@echo "... Logger.s"
 	@echo "... Socket.o"
 	@echo "... Socket.i"
 	@echo "... Socket.s"
@@ -417,9 +420,6 @@ help:
 	@echo "... eventLoopThread.o"
 	@echo "... eventLoopThread.i"
 	@echo "... eventLoopThread.s"
-	@echo "... logger.o"
-	@echo "... logger.i"
-	@echo "... logger.s"
 	@echo "... poller.o"
 	@echo "... poller.i"
 	@echo "... poller.s"

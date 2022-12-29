@@ -59,3 +59,8 @@ eventLoop *EventLoopThreadPool::getNextLoop()
     }
     return loop;
 }
+
+void EventLoopThreadPool::setThreadNum(int numthreads)
+{
+    numThreads_ = numthreads;
+}

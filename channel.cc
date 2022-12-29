@@ -1,11 +1,11 @@
 #include <sys/epoll.h>
 #include "channel.h"
-#include "logger.h"
+#include "Logger.h"
 #include "eventLoop.h"
 
-const int KNoneEvent = 0;
-const int KReadEvent = EPOLLIN | EPOLLPRI;
-const int KWriteEvent = EPOLLOUT;
+const int channel::KNoneEvent = 0;
+const int channel::KReadEvent = EPOLLIN | EPOLLPRI;
+const int channel::KWriteEvent = EPOLLOUT;
 
 void channel::enableReading()
 {

@@ -1,15 +1,15 @@
 #include <unistd.h>
 #include "Acceptor.h"
-#include "logger.h"
+#include "Logger.h"
 #include <errno.h>
 
 static int createNonblocking();
 
 Acceptor::Acceptor(eventLoop *loop, const InetAdderss &listenAddr, bool reuseport)
     : loop_(loop)
-    , acceptSocket_(createNonblocking())
-    , acceptChannel_(loop_, acceptSocket_.fd())
     , listenning_(false)
+    , acceptSocket_(createNonblocking())
+    , acceptChannel_(loop_, acceptSocket_.fd())   
 {
     acceptSocket_.setReuseAddr(true);
     acceptSocket_.setReusePort(true);
@@ -45,7 +45,7 @@ static int createNonblocking()
     int sockfd = ::socket(AF_INET, SOCK_STREAM | SOCK_NONBLOCK | SOCK_CLOEXEC, 0);
     if (sockfd < 0)
     {
-        LOG_FATAL("%s:%s:%d listen sockfd created err:%d \n", __FILE__, __FUNCTION__, __LINE__, errno);
+        LogFatal << "listen sockfd created err:" << errno;
     }
     return sockfd;
 }
@@ -68,11 +68,12 @@ void Acceptor::handleRead()
     }
     else
     {
-        LOG_FATAL("%s:%s:%d accept err:%d \n", __FILE__, __FUNCTION__, __LINE__, errno);
         if (errno == EMFILE)
         {
             ::close(connfd);
-            LOG_FATAL("%s:%s:%d accept sockfd reach limit\n", __FILE__, __FUNCTION__, __LINE__);
+            LogFatal << "Accept sockfd reach limit...";
         }
+
+        LogFatal << "Accept error: " << errno;
     }
 }

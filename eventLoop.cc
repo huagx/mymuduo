@@ -2,7 +2,7 @@
 #include <fcntl.h>
 #include <sys/eventfd.h>
 #include "eventLoop.h"
-#include "logger.h"
+#include "Logger.h"
 #include "poller.h"
 #include "channel.h"
 
@@ -17,7 +17,7 @@ static int createEventFd()
     int evtFd = ::eventfd(0, EFD_NONBLOCK | EFD_CLOEXEC);
     if (evtFd < 0)
     {
-        LOG_FATAL("create event fd error: %d\n", errno);
+        LogFatal << "Create event fd error: " << errno;
     }
     return evtFd;
 }
@@ -25,17 +25,17 @@ static int createEventFd()
 eventLoop::eventLoop() 
     : looping_(false)
     , quit_(false)
-    , callPendingFunctors_(false)
     , threadId_(currentThread::tid())
     , poller_(poller::newDefaultPoller(this))
     , wakeupFd_(createEventFd())
     , wakeupChannel_(new channel(this, wakeupFd_))
     , currentActiveChannel_(nullptr)
+    , callPendingFunctors_(false)
 {
-    LOG_DEBUG("EventLoop created %p in thread %d \n", this, threadId_);
+    LogDebug << "EventLoop created " << this << " in thread " << threadId_;
     if (t_loopInthisthread)
     {
-        LOG_FATAL("another eventLoop %p exists in this thread %d \n", t_loopInthisthread, threadId_);
+        LogFatal << "Another eventLoop " << t_loopInthisthread << " exists in this thread " << threadId_;
     }
     else
     {
@@ -64,7 +64,7 @@ void eventLoop::handleRead()
 
     if (n != sizeof one)
     {
-        LOG_ERROR("eventLoop::handleRead reads %d bytes instead of 8", n);
+        LogError << "EventLoop::handleRead reads " << n << " bytes instead of 8";
     }
 }
 
@@ -73,7 +73,7 @@ void eventLoop::loop()
     quit_ = false;
     looping_ = true;
 
-    LOG_INFO("eventLoop %p start looping \n", this);
+    LogInfo << "EventLoop " << this << "start looping";
 
     while (!quit_)
     {
@@ -91,7 +91,7 @@ void eventLoop::loop()
         doPendingFunctors();
     }
 
-    LOG_INFO("eventLoop::loop %p stop looping. \n", this);
+    LogInfo << "eventLoop loop " << this << " stop looping.";
     looping_ = false;
 }
 
@@ -143,7 +143,7 @@ void eventLoop::wakeUp()
     ssize_t n = write(wakeupFd_, &one, sizeof one);
     if (n != sizeof one)
     {
-        LOG_DEBUG("eventLoop::wakeUp() writes %lu bytes instead of 8 \n" n);
+        LogDebug << "eventLoop::wakeUp() writes " << n << " bytes instead of 8";
     }
 }
 
@@ -160,6 +160,11 @@ void eventLoop::updateChannel(channel *chnl)
 bool eventLoop::hasChannel(channel *chnl)
 {
     return poller_->hasChannel(chnl);
+}
+
+bool eventLoop::isInLoopThread() const
+{
+    return threadId_ == currentThread::tid();
 }
 
 void eventLoop::doPendingFunctors()

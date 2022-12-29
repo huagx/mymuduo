@@ -1,5 +1,5 @@
 #include "epollPoller.h"
-#include "logger.h"
+#include "Logger.h"
 #include "channel.h"
 #include <cstring>
 #include <unistd.h>
@@ -18,7 +18,7 @@ epollPoller::epollPoller(eventLoop *loop)
 {
     if (epollFd_ < 0)
     {
-        LOG_FATAL("epoll_create error:%d\n", errno);
+        LogFatal << "Epoll create error: " << errno;
     }
 }
 
@@ -29,7 +29,7 @@ epollPoller::~epollPoller()
 
 timeStamp epollPoller::poll(int timeoutMs, channelList *activeChannels)
 {
-    LOG_INFO("func=%s => fd total count : %lu\n", __FUNCTION__, channels_.size());
+    LogInfo << "Epoll listen fd total count: " << channels_.size();
     // 这里一次epoll最多取出channels_.size()个fd的事件， 如果numEvents的个数等于channels_.size()的大小的话，那么events_就会进行扩容
     int numEvents = ::epoll_wait(epollFd_, &*events_.begin(), static_cast<int>(events_.size()), timeoutMs);
     int saveErrno = errno; //保存
@@ -37,23 +37,23 @@ timeStamp epollPoller::poll(int timeoutMs, channelList *activeChannels)
 
     if (numEvents > 0)
     {
-        LOG_DEBUG("%d events happend \n", numEvents);
+        LogDebug << "Have " << numEvents << " fds are ready for this round.";
         fillActiveChannels(numEvents, activeChannels);
-        if (numEvents == events_.size())
+        if (numEvents == static_cast<int>(events_.size()))
         {
             events_.resize(events_.size() * 2); //扩容
         }
     }
     else if (numEvents == 0)
     {
-        LOG_DEBUG("no event happen.\n");
+        LogDebug << "No fd has events.";
     }
     else
     {
         if (saveErrno != EINTR)
         {
             errno = saveErrno;
-            LOG_ERROR("epollPoller::poll err!");
+            LogDebug << "epollPoller poll error: " << errno;
         }
     }
 
@@ -63,7 +63,7 @@ timeStamp epollPoller::poll(int timeoutMs, channelList *activeChannels)
 void epollPoller::updateChannel(channel *chnl)
 {
     const int index = chnl->index();
-    LOG_INFO("fd=%d event=%d index=%d \n", chnl->fd(), chnl->events(), index);
+    LogInfo << "updateChannel: fd = " << chnl->fd() << ", event = " << chnl->events() <<  ", index = " << index;
     if (index == kNew || index == kDelete)
     {
         if (index == kNew)
@@ -76,7 +76,7 @@ void epollPoller::updateChannel(channel *chnl)
     }
     else
     {
-        int fd = chnl->fd();
+        //int fd = chnl->fd();
         if (chnl->isNoneEvent())
         {
             update(EPOLL_CTL_DEL, chnl);
@@ -128,11 +128,11 @@ void epollPoller::update(int operation, channel *chnl)
     {
         if (operation == EPOLL_CTL_DEL)
         {
-            LOG_ERROR("epoll_ctl del error! \n");
+            LogError << "Epoll ctl del error...";
         }
         else
         {
-            LOG_FATAL("epoll_ctl add/mod error!\n");
+            LogFatal << "Epoll ctl add/mod error...";
         }
     }
 }

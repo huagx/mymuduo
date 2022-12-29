@@ -38,6 +38,17 @@ void Buffer::makeSpace(size_t len)
     }
 }
 
+char* Buffer::begin()
+{
+    return &*buffer_.begin();
+}
+
+const char* Buffer::begin() const
+{
+    return &*buffer_.begin();
+}
+
+
 const char* Buffer::beginWrite() const 
 {
     return begin() + writerIndex_;
@@ -80,7 +91,7 @@ ssize_t Buffer::readFd(int fd, int* saveErrno)
     {
         *saveErrno = errno;
     }
-    else if (n <= writeAble) //buffer可写缓冲区足够写下当前数据 
+    else if (n <= static_cast<ssize_t>(writeAble)) //buffer可写缓冲区足够写下当前数据 
     {
         writerIndex_ += n;
     }
@@ -101,6 +112,11 @@ ssize_t Buffer::writeFd(int fd, int* saveErrno)
         *saveErrno = errno;
     }
     return n;
+}
+
+Buffer::~Buffer()
+{
+    
 }
 
 size_t Buffer::readAbleBytes() const

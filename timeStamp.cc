@@ -34,8 +34,4 @@ std::string timeStamp::toString () const
     return buf;
 }
 
-int main () {
-    std::cout << timeStamp::now().toString() << std::endl;
-    return 0;
-}
 

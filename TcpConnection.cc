@@ -2,7 +2,7 @@
 #include <iostream>
 #include "TcpConnection.h"
 #include "eventLoop.h"
-#include "logger.h"
+#include "Logger.h"
 #include "Socket.h"
 #include "channel.h"
 #include "eventLoop.h"
@@ -15,7 +15,7 @@ static eventLoop *checkLoopNotNull(eventLoop *loop)
 {
     if (loop == nullptr)
     {
-        LOG_FATAL("%s:%s:%d TcpConnection loop is null! \n", __FILE__, __FUNCTION__, __LINE__);
+        LogFatal << "TcpConnection loop is nullptr !";
     }
     return loop;
 }
@@ -40,13 +40,13 @@ TcpConnection::TcpConnection(eventLoop *loop,
     channel_->setCloseCB(std::bind(&TcpConnection::handleClose, this));
     channel_->setErrorCB(std::bind(&TcpConnection::handleError, this));
 
-    LOG_INFO("TcpConnection::ctor[%s] at fd=%d\n", name_.c_str(), sockfd);
+    LogInfo << "TcpConnection::ctor[" << name << "] at fd = " << sockfd;
     socket_->setKeepAlive(true);
 }
 
 TcpConnection::~TcpConnection()
 {
-    LOG_INFO("TcpConnection::dtor[%s] at fd =%d state=%d\n", name_.c_str(), channel_->fd(), (int)state_);
+    LogInfo << "TcpConnection::dtor[" << name_ << "]" << " at fd = " << channel_->fd() << ", state = " << state_;
 }
 
 void TcpConnection::handleRead(timeStamp receiveTime)
@@ -64,7 +64,7 @@ void TcpConnection::handleRead(timeStamp receiveTime)
     else
     {
         errno = savedErrno;
-        LOG_ERROR("TcpConnection::handleRead\n");
+        LogError << "TcpConnection handleRead error: " << errno;
         handleError();
     }
 }
@@ -94,18 +94,18 @@ void TcpConnection::handleWrite()
         }
         else
         {
-            LOG_ERROR("TcpConnection::handleWrite");
+            LogError << "TcpConnection handleWrite error: " << errno;
         }
     }
     else
     {
-        LOG_ERROR("TcpConnection fd=%d is down, no more writing \n", channel_->fd());
+        LogError << "TcpConnection fd = " << channel_->fd() << " is down, no more writing !"; 
     }
 }
 
 void TcpConnection::handleClose()
 {
-    LOG_INFO("fd=%d state=%d \n", channel_->fd(), (int)state_);
+    LogInfo << "Fd = " << channel_->fd() << ", state = " << state_; 
     setState(kDisconnected);
     channel_->disableAll();
 
@@ -134,7 +134,7 @@ void TcpConnection::handleError()
     {
         err = optval;
     }
-    LOG_ERROR("TcpConnection::handleError name:%s - SO_ERROR:%d \n", name_.c_str(), err);
+    LogError << "TcpConnection::handleError name: " <<  name_ << " - SO_ERROR:" << err; 
 }
 
 void TcpConnection::send(const std::string &buf)
@@ -208,7 +208,7 @@ void TcpConnection::sendInLoop(const void *data, size_t len)
 
     if (state_ == kDisconnected)
     {
-        LOG_ERROR("disconnected, give up writing \n");
+        LogError << "Disconnected, give up writing!";
         return;
     }
 
@@ -229,7 +229,7 @@ void TcpConnection::sendInLoop(const void *data, size_t len)
             nwrote = 0;
             if (errno != EWOULDBLOCK)
             {
-                LOG_ERROR("TcpConnection::sendInLoop");
+                LogError << "TcpConnection sendInLoop, error : " << errno;
                 if (errno == EPIPE || errno == ECONNRESET)
                 {
                     faultError = true;

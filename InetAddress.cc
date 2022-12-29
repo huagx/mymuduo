@@ -2,6 +2,12 @@
 #include <string.h>
 #include <cstdio>
 
+InetAdderss::InetAdderss(const sockaddr_in &addr)
+{
+    addr_ = addr;
+}
+
+
 InetAdderss::InetAdderss(uint16_t port, std::string ip)
 {
     bzero(&addr_, sizeof(addr_));

@@ -12,6 +12,8 @@
 #include "noncopyable.h"
 #include "Acceptor.h"
 #include "CallBack.h"
+#include "TcpConnection.h"
+#include "Buffer.h"
 
 class tcpServer
 {
@@ -56,7 +58,7 @@ private:
     WriteCompleteCallback writeCompleteCallback_; //消息写完时的回调
 
     ThreadInitCallback threadInitCallback_;
-    std::atomic_int started_;
+    std::atomic_int started_{0};
 
     int nextConnId_;
     ConnectionMap connections_;
